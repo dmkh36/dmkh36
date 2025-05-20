@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Penanda Kartu Poker</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background-color: #1b1b1b;
+      color: #fff;
+    }
+    h1 {
+      margin-top: 20px;
+    }
+    .deck {
+      display: grid;
+      grid-template-columns: repeat(13, 40px);
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .card {
+      width: 40px;
+      height: 60px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: bold;
+      background-color: white;
+      text-shadow: 0 0 1px #000;
+    }
+    .card.marked {
+      background-color: #888;
+      color: white !important;
+      text-decoration: line-through;
+    }
+
+    /* Warna berdasarkan suit */
+    .spade { color: black; }
+    .heart { color: red; }
+    .club  { color: gray; }
+    .diamond { color: hotpink; }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+
+    .suit-label {
+      margin-top: 10px;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Penanda Kartu Poker</h1>
+
+  <div id="cards-container"></div>
+
+  <button onclick="resetCards()">🔄 Reset Semua</button>
+
+  <script>
+    const suits = ['♠', '♣', '♦', '♥'];
+    const suitClassMap = {
+      '♠': 'spade',
+      '♥': 'heart',
+      '♣': 'club',
+      '♦': 'diamond'
+    };
+    const values = ['3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2'];
+
+    const container = document.getElementById('cards-container');
+
+    suits.forEach(suit => {
+      const label = document.createElement('div');
+      label.className = 'suit-label';
+      label.innerText = 'Suit ' + suit;
+      container.appendChild(label);
+
+      const row = document.createElement('div');
+      row.className = 'deck';
+
+      values.forEach(value => {
+        const card = document.createElement('div');
+        card.className = `card ${suitClassMap[suit]}`;
+        card.innerText = value + suit;
+        card.onclick = () => card.classList.toggle('marked');
+        row.appendChild(card);
+      });
+
+      container.appendChild(row);
+    });
+
+    function resetCards() {
+      document.querySelectorAll('.card').forEach(card => {
+        card.classList.remove('marked');
+      });
+    }
+  </script>
+
+</body>
+</html>
